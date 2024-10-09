@@ -76,14 +76,14 @@ class Handler(BaseHTTPRequestHandler):
 
     def password_required(self):
         response = "Password required from %s" % self.client_address[0]
-        self.wfile.write('''{ "error": "%s" }''' % response)
+        self.wfile.write(bytes('''{ "error": "%s" }''' % response, encoding='utf8'))
         print (response)
         self.close_connection = 1
         return False
 
     def access_denied(self):
         response = "Client %s is not allowed!" % self.client_address[0]
-        self.wfile.write('''{ "error": "%s" }''' % response)
+        self.wfile.write(bytes('''{ "error": "%s" }''' % response, encoding='utf8'))
         print (response)
         self.close_connection = 1
         return False
@@ -202,11 +202,11 @@ class Handler(BaseHTTPRequestHandler):
         else:
             response = "Failed"
         if "Failed" in response:
-            self.wfile.write('''{ "error": "%s" }''' % response)
+            self.wfile.write(bytes('''{ "error": "%s" }''' % response, encoding='utf8'))
         elif "Sent" in response:
-            self.wfile.write('''{ "ok": "%s" }''' % response)
+            self.wfile.write(bytes('''{ "ok": "%s" }''' % response, encoding='utf8'))
         else:
-            self.wfile.write (response);
+            self.wfile.write (bytes(response, encoding='utf8'));
         print ("\t"+response)
 
 def listCommand():
