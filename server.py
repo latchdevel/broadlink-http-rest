@@ -1,7 +1,7 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import broadlink, configparser
 import sys
-import time, binascii
+import time
 import settings
 import signal
 import socket
@@ -9,7 +9,6 @@ import errno
 import json
 import shutil
 from os import path
-from Crypto.Cipher import AES
 
 class Server(HTTPServer):
     def get_request(self):
@@ -234,9 +233,6 @@ def sendCommand(commandName,deviceName):
         device = DeviceByName[deviceName];
         serviceName = deviceName + ' Commands'
 
-    deviceKey = device.key
-    deviceIV = device.iv
-
     if settingsFile.has_option(serviceName, commandName):
         commandFromSettings = settingsFile.get(serviceName, commandName)
     elif settingsFile.has_option('Commands', commandName):
@@ -271,9 +267,8 @@ def sendCommand(commandName,deviceName):
                     sendCommand(command,deviceName)
 
             return True
-        decodedCommand = binascii.unhexlify(commandFromSettings)
-        AESEncryption = AES.new(str(deviceKey), AES.MODE_CBC, str(deviceIV))
-        encodedCommand = AESEncryption.encrypt(str(decodedCommand))
+        decodedCommand = bytes.fromhex(commandFromSettings)
+        encodedCommand = device.encrypt(decodedCommand)
 
         finalCommand = encodedCommand[0x04:]
 
@@ -298,9 +293,6 @@ def learnCommand(commandName, deviceName=None):
 
     print ("Waiting %d seconds to capture command" % GlobalTimeout)
 
-    deviceKey = device.key
-    deviceIV = device.iv
-
     device.enter_learning()
     time.sleep(GlobalTimeout)
     LearnedCommand = device.check_data()
@@ -312,8 +304,7 @@ def learnCommand(commandName, deviceName=None):
     AdditionalData = bytearray([0x00, 0x00, 0x00, 0x00])
     finalCommand = AdditionalData + LearnedCommand
 
-    AESEncryption = AES.new(str(deviceKey), AES.MODE_CBC, str(deviceIV))
-    decodedCommand = binascii.hexlify(AESEncryption.decrypt(str(finalCommand)))
+    decodedCommand = device.decrypt(finalCommand).hex()
 
     backupSettings()
     try:
