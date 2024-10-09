@@ -545,7 +545,7 @@ def SigInt(signum, frame):
 
 if __name__ == "__main__":
     global ShutdownRequested
-    global InteruptRequested
+    global InterruptRequested
     ShutdownRequested = False
     signal.signal(signal.SIGHUP,SigUsr1)
     signal.signal(signal.SIGINT,SigInt)
