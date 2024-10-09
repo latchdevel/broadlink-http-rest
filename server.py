@@ -537,5 +537,3 @@ if __name__ == "__main__":
         serverParams = readSettingsFile()
         InterruptRequested = False
         start(**serverParams)
-        if not ShutdownRequested:
-            reload(settings)
