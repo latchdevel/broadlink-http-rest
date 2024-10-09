@@ -508,10 +508,14 @@ def readSettingsFile():
                 device = broadlink.dooya((Dev[devname,'IPAddress'], 80), Dev[devname,'MACAddress'], Dev[devname,'Device'])
             device.timeout = Dev[devname,'Timeout']
             if not devname in DeviceByName:
-                device.hostname = devname
-                device.auth()
-                devices.append(device)
-                print ("%s: Read %s on %s (%s)" % (devname, device.type, str(device.host[0]), device.mac))
+                try:
+                    device.hostname = devname
+                    device.auth()
+                    devices.append(device)
+                    print ("%s: Read %s on %s (%s)" % (devname, device.type, str(device.host[0]), device.mac))
+                except Exception as e:
+                    print(f"ERROR: Unable to connect to {devname} {device.host[0]} {e}")
+
             DeviceByName[devname] = device
     return { "port": serverPort, "listen": listen_address, "timeout": GlobalTimeout }
 
