@@ -315,7 +315,7 @@ def learnCommand(commandName, deviceName=None):
         settingsFile.write(broadlinkControlIniFile)
         broadlinkControlIniFile.close()
         return True
-    except StandardError as e:
+    except Exception as e:
         print("Error writing settings file: %s" % e)
         restoreSettings()
         return False
