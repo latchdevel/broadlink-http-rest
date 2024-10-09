@@ -335,7 +335,7 @@ def setStatus(commandName, status, deviceName=None):
         settingsFile.write(broadlinkControlIniFile)
         broadlinkControlIniFile.close()
         return True
-    except StandardError as e:
+    except Exception as e:
         print ("Error writing settings file: %s" % e)
         restoreSettings()
         return False
@@ -483,7 +483,7 @@ def readSettingsFile():
                 print ("%s: Found %s on %s (%s) type: %s" % (device.hostname, device.type, device.host, hexmac, hex(device.devtype)))
             settingsFile.write(broadlinkControlIniFile)
             broadlinkControlIniFile.close()
-        except StandardError as e:
+        except Exception as e:
             print ("Error writing settings file: %s" % e)
             restoreSettings()
     else:
