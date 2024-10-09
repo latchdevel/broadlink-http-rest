@@ -1,8 +1,7 @@
-from BaseHTTPServer import BaseHTTPRequestHandler, HTTPServer
+from http.server import BaseHTTPRequestHandler, HTTPServer
 import broadlink, configparser
-import sys, getopt
+import sys
 import time, binascii
-import netaddr
 import settings
 import signal
 import socket
