@@ -274,8 +274,8 @@ def sendCommand(commandName,deviceName):
 
     try:
         device.send_data(finalCommand)
-    except Exception:
-        print ("Probably timed out..")
+    except Exception as e:
+        print (f"ERROR: Unable to send command {e}")
     return True
 
 
