@@ -380,7 +380,7 @@ def backupSettings():
     shutil.copy2(settings.settingsINI,settings.settingsINI+".bak")
 
 def restoreSettings():
-    if os.path.isfile(settings.settingsINI+".bak"):
+    if path.isfile(settings.settingsINI+".bak"):
         shutil.copy2(settings.settingsINI+".bak",settings.settingsINI)
     else:
         print ("Can't find backup to restore!  Refusing to make this worse!")
