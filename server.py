@@ -506,6 +506,18 @@ def readSettingsFile():
                 device = broadlink.S1C((Dev[devname,'IPAddress'], 80), Dev[devname,'MACAddress'], Dev[devname,'Device'])
             if Dev[devname,'Type'] == 'DOOYA':
                 device = broadlink.dooya((Dev[devname,'IPAddress'], 80), Dev[devname,'MACAddress'], Dev[devname,'Device'])
+            if Dev[devname,'Type'] == 'RM4':
+                device = broadlink.rm4((Dev[devname,'IPAddress'], 80), Dev[devname,'MACAddress'], Dev[devname,'Device'])
+            if Dev[devname,'Type'] == 'RM4MINI':
+                device = broadlink.rm4mini((Dev[devname,'IPAddress'], 80), Dev[devname,'MACAddress'], Dev[devname,'Device'])
+            if Dev[devname,'Type'] == 'RM4MINIB':
+                device = broadlink.rm4minib((Dev[devname,'IPAddress'], 80), Dev[devname,'MACAddress'], Dev[devname,'Device'])
+            if Dev[devname,'Type'] == 'RM4PRO':
+                device = broadlink.rm4pro((Dev[devname,'IPAddress'], 80), Dev[devname,'MACAddress'], Dev[devname,'Device'])
+            if Dev[devname,'Type'] == 'RMMINI':
+                device = broadlink.rmmini((Dev[devname,'IPAddress'], 80), Dev[devname,'MACAddress'], Dev[devname,'Device'])
+            if Dev[devname,'Type'] == 'RMPRO':
+                device = broadlink.rmpro((Dev[devname,'IPAddress'], 80), Dev[devname,'MACAddress'], Dev[devname,'Device'])
             device.timeout = Dev[devname,'Timeout']
             if not devname in DeviceByName:
                 try:
@@ -535,7 +547,7 @@ if __name__ == "__main__":
     global ShutdownRequested
     global InteruptRequested
     ShutdownRequested = False
-    signal.signal(signal.SIGUSR1,SigUsr1)
+    signal.signal(signal.SIGHUP,SigUsr1)
     signal.signal(signal.SIGINT,SigInt)
     while not ShutdownRequested:
         serverParams = readSettingsFile()
