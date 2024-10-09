@@ -71,7 +71,7 @@ class Handler(BaseHTTPRequestHandler):
                 print ("TRY %s != %s" % (GlobalPassword, password))
         except NameError:
                 return self.password_required()
-        print ("LSE %s != %s" % (GlobalPassword, parameters['password']))
+        print ("LSE %s != %s" % (GlobalPassword, password))
         self.password_required()
 
     def password_required(self):
